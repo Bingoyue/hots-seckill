@@ -1,0 +1,54 @@
+server:
+  port: 6666
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+        port: 9999
+    gateway:
+      routes: #数组形式
+        - id: user-service  #商品服务 路由唯一标识
+          uri: lb://hots-user-service  #从nocas进行转发
+          order: 1 #优先级，数字越小优先级越高
+          predicates: #断言 配置哪个路径才转发，前端访问路径统一加上XXX-server，网关判断转发对应的服务，如果是回调业务记得修改
+            - Path=/user-server/**
+          filters: #过滤器，请求在传递过程中通过过滤器修改
+            - StripPrefix=1  #去掉第一层前缀，转发给后续的路径
+        - id: product-service
+          uri: lb://hots-product-service
+          order: 1
+          predicates:
+            - Path=/product-server/**
+          filters:
+            - StripPrefix=1
+        - id: seckill-service
+          uri: lb://hots-seckill-service
+          order: 1
+          predicates:
+            - Path=/seckill-server/**
+          filters:
+            - StripPrefix=1
+        - id: order-service
+          uri: lb://hots-order-service
+          order: 1
+          predicates:
+            - Path=/order-server/**
+          filters:
+            - StripPrefix=1
+
+      discovery:
+        locator:
+          enabled: true
+
+logging:
+  level:
+    root: INFO
+
+

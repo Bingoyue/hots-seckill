@@ -1,0 +1,17 @@
+io/hots/controller/request/ProductItemRequest.class
+io/hots/controller/request/LockProductRequest.class
+io/hots/service/impl/OrderServiceImpl.class
+io/hots/entity/ProductItemEntity.class
+io/hots/config/ThreadPoolConfig.class
+io/hots/mapper/OrderItemMapper.class
+io/hots/config/ThreadPoolConfigProperties.class
+io/hots/OrderApplication.class
+io/hots/mapper/OrderMapper.class
+io/hots/mq/OrderCloseMQListener.class
+io/hots/config/InterceptorConfig.class
+io/hots/config/RabbitMQConfig.class
+io/hots/controller/OrderController.class
+io/hots/feign/ProductFeignService.class
+io/hots/entity/OrderEntity.class
+io/hots/mq/OrderCreateMQListener.class
+io/hots/service/OrderService.class

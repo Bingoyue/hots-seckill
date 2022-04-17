@@ -1,0 +1,8 @@
+io/hots/controller/request/UserRegisterRequest.class
+io/hots/service/UserService.class
+io/hots/entity/UserEntity.class
+io/hots/controller/UserController.class
+io/hots/service/impl/UserServiceImpl.class
+io/hots/controller/request/UserLoginRequest.class
+io/hots/mapper/UserMapper.class
+io/hots/UserApplication.class

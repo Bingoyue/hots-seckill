@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.hots.mapper.OrderItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="io.hots.entity.ProductItemEntity">
+        <result column="order_id" property="orderId" />
+        <result column="out_trade_no" property="outTradeNo" />
+        <result column="product_id" property="productId" />
+        <result column="name" property="name" />
+        <result column="buy_num" property="buyNum" />
+        <result column="create_time" property="createTime" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="amount" property="amount" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List_No_Id">
+        order_id, out_trade_no, product_id, name, buy_num, create_time, total_amount,amount
+    </sql>
+
+    <!--批量插入-->
+    <insert id="insertBatch">
+
+        insert into order_item
+        (
+        <include refid="Base_Column_List_No_Id"/>
+        )
+        values
+        <foreach collection="orderItemList" item="item" index="index" separator=",">
+            (
+            #{item.orderId},
+            #{item.outTradeNo},
+            #{item.productId},
+            #{item.name},
+            #{item.buyNum},
+            #{item.createTime},
+            #{item.totalAmount},
+            #{item.amount}
+            )
+        </foreach>
+
+    </insert>
+
+</mapper>

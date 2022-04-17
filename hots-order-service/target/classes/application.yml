@@ -1,0 +1,86 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: hots-order-service
+  cloud:
+    #注册中心地址
+    nacos:
+      discovery:
+        server-addr: 112.74.200.164:8848
+
+  #消息队列
+  rabbitmq:
+    host: 112.74.200.164
+    port: 5672
+    virtual-host: /
+    password: admin
+    username: admin
+    #开启手动确认消息
+    listener:
+      simple:
+        acknowledge-mode: manual
+
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3308/hots_order?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  main:
+    allow-bean-definition-overriding: true
+  #redis 配置
+  redis:
+    host: 112.74.200.164
+    port: 8000
+    password: 123456
+
+#自定义消息队列配置，发送锁定库存消息-》延迟exchange-》lock.queue-》死信exchange-》release.queue
+mqconfig:
+  #延迟队列，不能被监听消费
+  order_close_delay_queue: order.close.delay.queue
+
+  #延迟队列的消息过期后转发的队列
+  order_close_queue: order.close.queue
+
+  #交换机
+  order_event_exchange: order.event.exchange
+
+  #进入延迟队列的路由key
+  order_close_delay_routing_key: order.close.delay.routing.key
+
+  #消息过期，进入释放队列的key,进入死信队列的key
+  order_close_routing_key: order.close.routing.key
+
+  #消息过期时间,毫秒，临时改为5分钟定时关单
+  ttl: 300000
+
+  #订单队列
+  order_queue: order.queue
+
+  #进入订单队列的key
+  order_routing_key: order.routing.key
+
+
+#配置plus打印sql日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+#设置日志级别,ERROR/WARN/INFO/DEBUG,默认是INFO以上才显示
+logging:
+  level:
+    root: INFO
+
+
+thread:
+  pool:
+    coreSize: 100
+    maxSize: 500
+    keepAliveTime: 60
+    blockQueueSize: 10000
+
+
+
